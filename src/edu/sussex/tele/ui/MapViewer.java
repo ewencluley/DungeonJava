@@ -28,7 +28,9 @@ public class MapViewer extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			RoomButton rb = (RoomButton)e.getSource();
+			desectAll();
 			rb.activate();
+			rb.setSelected(true);
 			//save the code
 			save();
 			currentRoom = rb;
@@ -49,6 +51,12 @@ public class MapViewer extends JPanel {
 		
 	}
 	
+	private void desectAll() {
+		for(Component c:this.getComponents()){
+			((RoomButton)c).setSelected(false);
+		}
+	}
+
 	public void makeCurrentRoomStart(){
 		for(Component button: this.getComponents()){
 			((RoomButton) button).setStartRoom(false);

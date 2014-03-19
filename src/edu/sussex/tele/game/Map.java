@@ -11,4 +11,8 @@ public class Map {
 	public void setStartRoom(Room room) {
 		startRoom = room;
 	}
+
+	public Room getRoomAt(int x, int y) {
+		return theMap[x][y];
+	}
 }

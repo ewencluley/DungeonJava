@@ -1,6 +1,5 @@
 package edu.sussex.tele.game;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -15,9 +14,13 @@ public class Room {
 	private RoomEvents roomEvents;
 	private boolean endRoom;
 	private boolean startRoom;
-	private PImage backgroundPath;
+	private PImage backgroundPImage;
 	
-	public Room(RoomEvents re){
+	private int x,y;
+	
+	public Room(int x, int y, RoomEvents re){
+		this.x =x;
+		this.y =y;
 		roomEvents = re;
 	}
 	public boolean isEndRoom() {
@@ -38,20 +41,24 @@ public class Room {
 		return startRoom;
 	}
 	public PImage getBackground() {
-		return backgroundPath;
+		return backgroundPImage;
 	}
 	public void setBackground(String backgroundPath) {
 		BufferedImage image = null;
 		try{
 			image = ImageIO.read(new File(backgroundPath));
-			this.backgroundPath =new PImage(image.getWidth(),image.getHeight(),PConstants.ARGB);
-			image.getRGB(0, 0, backgroundPath.width, backgroundPath.height, backgroundPath.pixels, 0, backgroundPath.width);
-			image.updatePixels();
+			this.backgroundPImage =new PImage(image.getWidth(),image.getHeight(),PConstants.ARGB);
+			image.getRGB(0, 0, backgroundPImage.width, backgroundPImage.height, backgroundPImage.pixels, 0, backgroundPImage.width);
+			backgroundPImage.updatePixels();
 		}catch(IOException e){
 			
 		}
 	}
+	public int getX() {
+		return x;
+	}
 	
-	
-	
+	public int getY() {
+		return y;
+	}
 }

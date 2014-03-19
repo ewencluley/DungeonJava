@@ -83,12 +83,27 @@ public class GameGUI extends JFrame{
 		panel_2.add(btnUp, BorderLayout.NORTH);
 		
 		JButton btnLeft = new JButton("Left");
+		btnLeft.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				theGame.move("LEFT");
+			}
+		});
 		panel_2.add(btnLeft, BorderLayout.WEST);
 		
 		JButton btnRight = new JButton("Right");
+		btnRight.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				theGame.move("RIGHT");
+			}
+		});
 		panel_2.add(btnRight, BorderLayout.EAST);
 		
 		JButton btnBackwards = new JButton("Backwards");
+		btnBackwards.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				theGame.move("BACKWARD");
+			}
+		});
 		panel_2.add(btnBackwards, BorderLayout.SOUTH);
 		panel_1.setLayout(gl_panel_1);
 		getContentPane().setLayout(groupLayout);

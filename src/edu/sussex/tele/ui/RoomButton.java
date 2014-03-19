@@ -3,7 +3,10 @@ package edu.sussex.tele.ui;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 
 import processing.core.PImage;
 
@@ -51,6 +54,7 @@ public class RoomButton extends JButton {
 
 	private String exitRoomCode;
 	private boolean roomExists;
+	private boolean selected;
 	
 	public boolean isRoomExists() {
 		return roomExists;
@@ -69,6 +73,10 @@ public class RoomButton extends JButton {
 		}
 	}
 	
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+
 	public void paintComponent(Graphics g){
 		if(roomExists){
 			if(startRoom){
@@ -82,8 +90,12 @@ public class RoomButton extends JButton {
 		}else{
 			this.setBackground(Color.gray);
 		}
-		//this.setOpaque(true);
-		//this.setBorderPainted(false);
+		if(selected){
+			this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+		}else{
+			this.setBorder(BorderFactory.createLineBorder(Color.darkGray));
+		}
+		
 		super.paintComponent(g);
 	}
 

@@ -36,7 +36,7 @@ public class BuildGame {
 				try {
 					result = Javac.compile(code);
 					Class<?> cls = classLoader.loadThisClass(result.get(0));
-					Room room = new Room((RoomEvents) cls.newInstance());
+					Room room = new Room(rb.x, rb.y,(RoomEvents) cls.newInstance());
 					theMap.addRoom(room, rb.x, rb.y);
 					room.setEndRoom(rb.isEndRoom());
 					room.setBackground(rb.getRoomImage());
