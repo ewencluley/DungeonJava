@@ -13,6 +13,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
+import javax.swing.UIManager;
 import javax.tools.ToolProvider;
 
 import edu.sussex.tele.compiler.AgentClassLoader;
@@ -94,6 +95,11 @@ public class GUI extends JFrame {
 	 * Create the frame.
 	 */
 	public GUI() {
+		 try {
+			    UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName() );
+			 } catch (Exception e) {
+			            e.printStackTrace();
+			 }
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 782, 591);
 		contentPane = new JPanel();

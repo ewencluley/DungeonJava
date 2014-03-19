@@ -1,5 +1,7 @@
 package edu.sussex.tele.game;
 
+import processing.core.PImage;
+
 public class Game implements Runnable{
 	
 	GameGUI gameGUI;
@@ -22,14 +24,18 @@ public class Game implements Runnable{
 	@Override
 	public void run() {
 		currentRoom.enterRoom();
-				
+		
 	}
 
 	public void move(String direction) {
 		switch(direction){
 		case "FORWARD":
-			currentRoom = theMap.getRoomAt(currentRoom.x-1, currentRoom.y);
+			//currentRoom = theMap.getRoomAt(currentRoom.x-1, currentRoom.y);
 		}
+	}
+
+	public Room getCurrentRoom() {
+		return currentRoom;
 	}
 	
 }

@@ -75,12 +75,15 @@ public class RoomButton extends JButton {
 				this.setBackground(Color.BLUE);
 			}else if(endRoom){
 				this.setBackground(Color.RED);
+				
 			}else{
 				this.setBackground(Color.GREEN);
 			}
 		}else{
 			this.setBackground(Color.gray);
 		}
+		//this.setOpaque(true);
+		//this.setBorderPainted(false);
 		super.paintComponent(g);
 	}
 

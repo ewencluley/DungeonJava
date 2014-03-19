@@ -31,7 +31,7 @@ public class GameGUI extends JFrame{
 		this.setSize(800, 600);
 		
 		JPanel panel = new JPanel();
-		graphicsPanel = new GraphicsPanel();
+		graphicsPanel = new GraphicsPanel(theGame);
 		panel.add(graphicsPanel);
 		
 		JPanel panel_1 = new JPanel();

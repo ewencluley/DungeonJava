@@ -7,4 +7,8 @@ public class Map {
 	public void addRoom(Room room, int x, int y){
 		theMap[x][y] = room;
 	}
+
+	public void setStartRoom(Room room) {
+		startRoom = room;
+	}
 }

@@ -39,6 +39,10 @@ public class BuildGame {
 					Room room = new Room((RoomEvents) cls.newInstance());
 					theMap.addRoom(room, rb.x, rb.y);
 					room.setEndRoom(rb.isEndRoom());
+					room.setBackground(rb.getRoomImage());
+					if(rb.isStartRoom()){
+						theMap.setStartRoom(room);
+					}
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
