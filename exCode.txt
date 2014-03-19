@@ -1,0 +1,12 @@
+try{
+moveToRoom("cave");
+Thread.sleep(1000);
+moveToRoom("castle");
+}catch(Exception e){}
+
+
+EBOOK
+http://kathleenkettles.eu01.aws.af.cm/paymentComplete.php?tx=73N89061SK137025R&st=Completed&amt=0%2e01&cc=GBP&cm=&item_number=003
+
+KEYPOINTS DOWNLOAD
+http://kathleenkettles.eu01.aws.af.cm/paymentComplete.php?tx=5TY27702US256723J&st=Completed&amt=0.01&cc=GBP&cm=&item_number=002
