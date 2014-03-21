@@ -93,7 +93,7 @@ public class RoomButton extends JButton {
 		if(selected){
 			this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		}else{
-			this.setBorder(BorderFactory.createLineBorder(Color.darkGray));
+			this.setBorder(BorderFactory.createLineBorder(Color.darkGray, 1));
 		}
 		
 		super.paintComponent(g);
