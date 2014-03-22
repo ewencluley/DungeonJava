@@ -4,8 +4,11 @@ public abstract class RoomEvents {
 	public abstract void enterRoom();
 	public abstract void exitRoom();
 	
-	public void dungeonMasterSpeak(String path){
-		SoundPlayer.play(path);
+	Game game;
+	Room room;
+	
+	public void music(String path){
+		game.music(path);
 	}
 	
 	public void pause(int seconds){
@@ -17,7 +20,10 @@ public abstract class RoomEvents {
 		}
 	}
 	
-	public void addMonster(){
-		
+	public void addGameListener(Game game){
+		this.game = game;
+	}
+	public void setRoom(Room room) {
+		this.room = room;
 	}
 }

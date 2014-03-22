@@ -53,7 +53,7 @@ public class GUI extends JFrame {
 	private String PLAYMETHOD_DEF_END = "}";
 	private JPanel contentPane;
 	
-	private CodePanel enterRoomScript, exitRoomScript;
+	private CodePanel enterRoomScript;
 	private JPanel panel_2;
 	private JTextField roomName;
 	private RoomImagePreview roomImagePreview;
@@ -80,7 +80,8 @@ public class GUI extends JFrame {
 	}
 	
 	public String getExitRoomScript(){
-		return exitRoomScript.getText();
+		return "";
+		//return exitRoomScript.getText();
 	}
 	
 	public void setEnterRoomScript(String code){
@@ -88,7 +89,7 @@ public class GUI extends JFrame {
 	}
 	
 	public void setExitRoomScript(String code){
-		exitRoomScript.setText(code);
+		//exitRoomScript.setText(code);
 	}
 
 	/**
@@ -111,8 +112,6 @@ public class GUI extends JFrame {
 		JPanel panel = new JPanel();
 		
 		mapViewer = new MapViewer(this);
-		
-		exitRoomScript = new CodePanel();
 		
 		panel_2 = new JPanel();
 		
@@ -150,15 +149,14 @@ public class GUI extends JFrame {
 									.addContainerGap()
 									.addComponent(roomImagePreview, GroupLayout.PREFERRED_SIZE, 249, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.UNRELATED)))
-							.addComponent(enterRoomScript, GroupLayout.PREFERRED_SIZE, 246, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(exitRoomScript, GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(enterRoomScript, GroupLayout.PREFERRED_SIZE, 497, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(mapViewer, GroupLayout.PREFERRED_SIZE, 229, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -167,7 +165,6 @@ public class GUI extends JFrame {
 							.addComponent(roomImagePreview, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addComponent(btnChangeImage))
-						.addComponent(exitRoomScript, GroupLayout.PREFERRED_SIZE, 505, GroupLayout.PREFERRED_SIZE)
 						.addComponent(enterRoomScript, GroupLayout.PREFERRED_SIZE, 505, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

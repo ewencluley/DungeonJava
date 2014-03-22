@@ -1,15 +1,36 @@
 package edu.sussex.tele.game;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-
-public class SoundPlayer {
+public class SoundPlayer extends Thread{
+	Player player;
+	public SoundPlayer(String path){
+		FileInputStream is;
+		try {
+			is = new FileInputStream(new File(path));
+			player = new Player(is);
+		}catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JavaLayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
-	  public static void play(String path) 
-	  {
-	    Media hit = new Media(path);
-		MediaPlayer mediaPlayer = new MediaPlayer(hit);
-		mediaPlayer.play();
-	  }
+	public void run(){
+		try {
+			player.play();
+		} catch (JavaLayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	public void stopSound() {
+		player.close();
+	}
 }

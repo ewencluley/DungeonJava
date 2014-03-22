@@ -3,13 +3,17 @@ package edu.sussex.tele.game;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import edu.sussex.tele.game.characters.Enemy;
 import processing.core.PConstants;
 import processing.core.PImage;
 
 public class Room {
+	
+	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	
 	private RoomEvents roomEvents;
 	private boolean endRoom;
@@ -22,6 +26,7 @@ public class Room {
 		this.x =x;
 		this.y =y;
 		roomEvents = re;
+		roomEvents.setRoom(this);
 	}
 	public boolean isEndRoom() {
 		return endRoom;
@@ -60,5 +65,8 @@ public class Room {
 	
 	public int getY() {
 		return y;
+	}
+	public RoomEvents getEvents() {
+		return roomEvents;
 	}
 }
