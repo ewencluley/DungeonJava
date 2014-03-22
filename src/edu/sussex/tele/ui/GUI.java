@@ -53,7 +53,7 @@ public class GUI extends JFrame {
 	private String PLAYMETHOD_DEF_END = "}";
 	private JPanel contentPane;
 	
-	private JTextPane enterRoomScript, exitRoomScript;
+	private CodePanel enterRoomScript, exitRoomScript;
 	private JPanel panel_2;
 	private JTextField roomName;
 	private RoomImagePreview roomImagePreview;
@@ -106,13 +106,13 @@ public class GUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		enterRoomScript = new JTextPane();
+		enterRoomScript = new CodePanel();
 		
 		JPanel panel = new JPanel();
 		
 		mapViewer = new MapViewer(this);
 		
-		exitRoomScript = new JTextPane();
+		exitRoomScript = new CodePanel();
 		
 		panel_2 = new JPanel();
 		
