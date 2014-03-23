@@ -15,6 +15,9 @@ public class Room {
 	
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	
+	public ArrayList<Enemy> getEnemies() {
+		return enemies;
+	}
 	private RoomEvents roomEvents;
 	private boolean endRoom;
 	private boolean startRoom;
@@ -37,6 +40,9 @@ public class Room {
 	
 	public void enterRoom(){
 		roomEvents.enterRoom();
+		if(!enemies.isEmpty()){
+			new Battle(enemies);
+		}
 	}
 	
 	public void exitRoom(){

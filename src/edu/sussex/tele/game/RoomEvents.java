@@ -1,5 +1,7 @@
 package edu.sussex.tele.game;
 
+import edu.sussex.tele.game.characters.Enemy;
+
 public abstract class RoomEvents {
 	public abstract void enterRoom();
 	public abstract void exitRoom();
@@ -18,6 +20,10 @@ public abstract class RoomEvents {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void addEnemy(Enemy e ){
+		room.enemies.add(e);
 	}
 	
 	public void addGameListener(Game game){

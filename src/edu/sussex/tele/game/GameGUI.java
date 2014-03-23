@@ -26,9 +26,10 @@ public class GameGUI extends JFrame{
 	Game theGame;
 	
 	public GameGUI(Game game){
+		setResizable(false);
 		theGame = game;
 		this.setTitle("My Game");
-		this.setSize(800, 600);
+		this.setSize(805, 730);
 		
 		JPanel panel = new JPanel();
 		graphicsPanel = new GraphicsPanel(theGame);
@@ -43,15 +44,15 @@ public class GameGUI extends JFrame{
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(10)
 							.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE))
-						.addComponent(panel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 784, GroupLayout.PREFERRED_SIZE))
+						.addComponent(panel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 800, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 460, GroupLayout.PREFERRED_SIZE)
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		
@@ -109,7 +110,7 @@ public class GameGUI extends JFrame{
 		getContentPane().setLayout(groupLayout);
 		graphicsPanel.init();
 		this.setVisible(true);
-		
+		this.pack();
 	}
 	
 	public void moveToRoom(String roomName){

@@ -75,5 +75,9 @@ public class Game implements Runnable{
 		Thread musicThread = new Thread(musicPlayer);
 		musicThread.start();
 	}
+
+	public void repaintGUI() {
+		gameGUI.pack();
+	}
 	
 }
