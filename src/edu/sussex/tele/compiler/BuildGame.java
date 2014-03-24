@@ -15,7 +15,7 @@ import edu.sussex.tele.ui.RoomButton;
 public class BuildGame {
 
 	private static int eventClassNumber =0;
-	private static String WRAPPER_CODE_START = "package edu.sussex.tele.game; \nimport edu.sussex.tele.game.characters.*;\npublic class RoomEvent";
+	private static String WRAPPER_CODE_START = "package edu.sussex.tele.game; \nimport edu.sussex.tele.game.characters.*;\nimport edu.sussex.tele.game.dice.*;\npublic class RoomEvent";
 	private static String WRAPPER_CODE_MID = " extends edu.sussex.tele.game.RoomEvents{"; 
 	private static String WRAPPER_CODE_END = "}"; 
 	private static String ENTER_DEF_START = "public void enterRoom(){";

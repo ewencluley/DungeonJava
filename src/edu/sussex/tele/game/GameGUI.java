@@ -1,19 +1,11 @@
 package edu.sussex.tele.game;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import processing.core.PApplet;
-import processing.core.PImage;
 import edu.sussex.tele.ui.GraphicsPanel;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
@@ -109,6 +101,8 @@ public class GameGUI extends JFrame{
 		panel_1.setLayout(gl_panel_1);
 		getContentPane().setLayout(groupLayout);
 		graphicsPanel.init();
+
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		this.pack();
 	}
@@ -122,8 +116,4 @@ public class GameGUI extends JFrame{
 		new Thread(theGame).start();
 	}
 	
-	protected void addCharacterToCurrentRoom(Character character){
-		graphicsPanel.add(character);
-		graphicsPanel.repaint();
-	}
 }

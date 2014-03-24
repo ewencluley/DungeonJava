@@ -3,7 +3,7 @@ package edu.sussex.tele.game;
 import java.util.ArrayList;
 import java.util.List;
 
-import processing.core.PImage;
+import edu.sussex.tele.game.characters.Hero;
 
 public class Game implements Runnable{
 	
@@ -12,13 +12,16 @@ public class Game implements Runnable{
 	Room currentRoom;
 	SoundPlayer musicPlayer;
 	
-	List<Monster> monsters = new ArrayList<Monster>(); 
+	ArrayList<Hero> heros = new ArrayList<Hero>(); 
 	List<NPC> npcs = new ArrayList<NPC>(); 
 	
 	public Game(Map map){
 		theMap = map;
 		currentRoom = map.startRoom;
 		currentRoom.getEvents().addGameListener(this);
+		heros.add(new Hero("C:\\Users\\Ewen\\workspace\\TELE\\character\\hero1.png"));//TODO change this so homer is not the hero
+		heros.add(new Hero("C:\\Users\\Ewen\\workspace\\TELE\\character\\hero1.png"));//TODO change this so homer is not the hero
+		heros.add(new Hero("C:\\Users\\Ewen\\workspace\\TELE\\character\\hero1.png"));//TODO change this so homer is not the hero
 	}
 	
 	public GameGUI getGameGUI() {
@@ -31,6 +34,7 @@ public class Game implements Runnable{
 
 	public void setGameGUI(GameGUI gameGUI) {
 		this.gameGUI = gameGUI;
+		currentRoom.setGameGUI(gameGUI);
 	}
 
 	@Override
@@ -58,6 +62,7 @@ public class Game implements Runnable{
 		if(nextRoom != null){
 			currentRoom.exitRoom();
 			currentRoom = nextRoom;
+			currentRoom.setGameGUI(gameGUI);
 			currentRoom.getEvents().addGameListener(this);
 			currentRoom.enterRoom();
 		}
@@ -78,6 +83,10 @@ public class Game implements Runnable{
 
 	public void repaintGUI() {
 		gameGUI.pack();
+	}
+
+	public ArrayList<Hero> getHeros() {
+		return heros;
 	}
 	
 }

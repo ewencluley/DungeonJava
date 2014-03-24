@@ -7,6 +7,10 @@ public abstract class RoomEvents {
 	public abstract void exitRoom();
 	
 	Game game;
+	public Game getGame() {
+		return game;
+	}
+
 	Room room;
 	
 	public void music(String path){
