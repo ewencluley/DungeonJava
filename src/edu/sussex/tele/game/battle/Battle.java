@@ -26,6 +26,10 @@ public class Battle implements Runnable{
 	BattlePhase phase = BattlePhase.START_BATTLE;
 	
 	int damage = 0;
+	public ArrayList<Enemy> returnEnemies =null;
+	public ArrayList<Hero> returnHeros =null;
+	
+	BattleDialog battleDialog;
 	
 	public BattlePhase getPhase() {
 		return phase;
@@ -35,7 +39,8 @@ public class Battle implements Runnable{
 		this.phase = phase;
 	}
 
-	public Battle(ArrayList<Enemy> enemies, ArrayList<Hero> heros) {
+	public Battle(ArrayList<Enemy> enemies, ArrayList<Hero> heros, BattleDialog battleDialog) {
+		this.battleDialog = battleDialog;
 		this.enemies.addAll(enemies);
 		this.heros.addAll(heros);
 		combatants.addAll(heros);combatants.addAll(enemies);
@@ -83,23 +88,32 @@ public class Battle implements Runnable{
 						heros.remove(currentTarget);
 						enemies.remove(currentTarget);
 						combatants.remove(currentTarget);
+						Thread.sleep(1500);
 					}
 				}
 				if(!heros.isEmpty() && !enemies.isEmpty()){
 					combatants.addAll(heros);combatants.addAll(enemies);
+				}else if(heros.isEmpty()){
+					battleInProgress = false;
+					phase = BattlePhase.BATTLE_LOST;
+					Thread.sleep(1500);
+					returnHeros = heros;
+					returnEnemies = new ArrayList<Enemy>();
+				}else if(enemies.isEmpty()){
+					battleInProgress = false;
+					phase = BattlePhase.BATTLE_WON;
+					Thread.sleep(1500);
+					returnHeros = heros;
+					returnEnemies = enemies;
 				}
 			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		battleDialog.setVisible(false);
 	}
-	
-	private void setupBattleTurn(){
-		//currentHero = heros.poll();
-		//currentEnemy = enemies.poll();
-	}
-	
+		
 	public void setCurrentTarget(Enemy enemy) {
 		currentTarget = enemy;
 	}

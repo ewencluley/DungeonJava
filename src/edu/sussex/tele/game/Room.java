@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import edu.sussex.tele.game.battle.BattleDialog;
+import edu.sussex.tele.game.battle.BattleResult;
 import edu.sussex.tele.game.characters.Enemy;
 import processing.core.PConstants;
 import processing.core.PImage;
@@ -43,7 +44,9 @@ public class Room {
 	public void enterRoom(){
 		roomEvents.enterRoom();
 		if(!enemies.isEmpty()){
-			new BattleDialog(gameGUI, enemies, roomEvents.getGame().getHeros());
+			BattleDialog bd = new BattleDialog(gameGUI, this, roomEvents.getGame());
+			
+			//roomEvents.getGame().setHeros(retVal.heros);
 		}
 	}
 	
@@ -82,5 +85,9 @@ public class Room {
 	}
 	public void setGameGUI(GameGUI gameGUI) {
 		this.gameGUI = gameGUI;
+	}
+	public void setEnemies(ArrayList<Enemy> returnEnemies) {
+		enemies = returnEnemies;
+		
 	}
 }

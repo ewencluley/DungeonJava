@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 import processing.core.PApplet;
+import edu.sussex.tele.game.Game;
+import edu.sussex.tele.game.Room;
 import edu.sussex.tele.game.characters.Enemy;
 import edu.sussex.tele.game.characters.Hero;
 
@@ -25,12 +27,11 @@ public class BattleDialog extends JDialog{
 
 	Battle battle;
 	
-	public BattleDialog(JFrame owner, ArrayList<Enemy> enemies2, ArrayList<Hero> heros) {
+	public BattleDialog(JFrame owner, Room room, Game game) {
 		super(owner, "Fight!", true);
 		setResizable(false);
 		this.setSize(820, 740);
-		
-		startBattle(enemies2, heros);
+		setupBattle(room.getEnemies(), game.getHeros());
 		BattleGraphics battleGraphics = new BattleGraphics(battle);
 		
 		JPanel panel = new JPanel();
@@ -69,13 +70,33 @@ public class BattleDialog extends JDialog{
 		btnNewButton_3.setAlignmentX(Component.CENTER_ALIGNMENT);
 		panel.add(btnNewButton_3);
 		getContentPane().setLayout(groupLayout);
+		Thread battleThread = new Thread(battle);
+		battleThread.start();
+		
 		battleGraphics.init();
 		this.setLocationRelativeTo(owner);
-		setVisible(true);
+		setVisible(true); //This blocks till end of battle
+		game.setHeros(battle.returnHeros);
+		room.setEnemies(battle.returnEnemies);
+		System.out.println("Battle Done.");
+		
 	}
-	
-	private void startBattle(ArrayList<Enemy> enemies, ArrayList<Hero> heros){
-		battle = new Battle(enemies, heros);
-		new Thread(battle).start();
+	public void setupBattle(ArrayList<Enemy> enemies, ArrayList<Hero> heros){
+		battle = new Battle(enemies, heros, this);
+	}
+	public void startBattle(){
+		
+		/*while(battle.returnEnemies == null || battle.returnHeros == null){
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		BattleResult br = new BattleResult();
+		br.enemies = battle.returnEnemies;
+		br.heros = battle.returnHeros;
+		return br;*/
 	}
 }

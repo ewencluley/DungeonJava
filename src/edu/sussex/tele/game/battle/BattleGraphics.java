@@ -10,7 +10,7 @@ import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PImage;
 
-public class BattleGraphics extends PApplet {
+public class BattleGraphics extends PApplet{
 
 	PImage battleBackground;
 	PImage fightBackground;
@@ -29,11 +29,14 @@ public class BattleGraphics extends PApplet {
 	public BattleGraphics(Battle battle) {
 		this.battle = battle;
 	}
+	
+	
 
 	public void setup(){
 		size(width,height);
 		battleBackground = this.loadImage("battle.jpg");
 		fightBackground = this.loadImage("battleFight.jpg");
+		deathBackground = this.loadImage("battleDeath.jpg");
 	}
 	
 	public void draw(){
@@ -56,7 +59,7 @@ public class BattleGraphics extends PApplet {
 			break;
 		case PLAYER_ATTACKS:
 			image(fightBackground,0,0);
-			player_fight();
+			fight();
 			break;
 		case NPC_TARGETS:
 			damageY=0;
@@ -65,22 +68,58 @@ public class BattleGraphics extends PApplet {
 			break;
 		case NPC_ATTACKS:
 			image(fightBackground,0,0);
-			npc_fight();
+			fight();
 			break;
-		case END_BATTLE:
+		case BATTLE_WON:
+			image(battleBackground,0,0);
+			won();
 			break;
-		case END_TURN:
+		case BATTLE_LOST:
+			lost();
 			break;
 		case TARGET_DEAD:
-			image(battleBackground,0,0);
+			image(deathBackground,0,0);
+			targetDead();
 			break;
 		}
-		
 	}
 	
-	private void npc_fight() {
-		// TODO Auto-generated method stub
-		
+	private void won() {
+		int enemyNo =1;
+		textAlign(CENTER);
+		super.textFont(font, 32);
+		this.text("Victory!", width/2, 50);
+		for(Hero h: battle.heros){
+			PImage eImg = h.getImage();
+			Rectangle position = new Rectangle(width - eImg.width*enemyNo, height - eImg.height, eImg.width, eImg.height);
+			image(eImg,position.x ,position.y);
+			enemyNo++;
+		}
+	}
+
+	private void lost() {
+		textAlign(CENTER);
+		super.textFont(font, 32);
+		this.text("Defeat!", width/2, 50);
+		int enemyNo =1;
+		for(Enemy e: battle.enemies){
+			if(battle.currentTarget == null){
+				noTint();
+			}
+			PImage eImg = e.getImage();
+			Rectangle position = new Rectangle(width - eImg.width*enemyNo, height - eImg.height, eImg.width, eImg.height);
+			image(eImg,position.x ,position.y);
+			enemyNo++;
+		}
+	}
+
+	private void targetDead() {
+		textAlign(CENTER);
+		super.textFont(font, 32);
+		this.text("Killed!", width/2, 50);
+		PImage eImg = battle.currentTarget.getImage();
+		Rectangle position = new Rectangle(width/2 - eImg.width/2, height - eImg.height, eImg.width, eImg.height);
+		image(eImg,position.x ,position.y);
 	}
 
 	private void npc_target() {
@@ -143,7 +182,7 @@ public class BattleGraphics extends PApplet {
 		}
 	}
 	
-	public void player_fight(){
+	public void fight(){
 		PImage eImg = battle.currentTarget.getImage();
 		PImage hImg = battle.currentCombatant.getImage();
 		Rectangle ePosition = new Rectangle(width/4*3 - eImg.width/2, height - eImg.height, eImg.width, eImg.height);

@@ -1,5 +1,7 @@
 package edu.sussex.tele.ui;
 
+import java.util.ConcurrentModificationException;
+
 import edu.sussex.tele.game.Game;
 import edu.sussex.tele.game.characters.Enemy;
 import processing.core.PApplet;
@@ -35,11 +37,13 @@ public class GraphicsPanel extends PApplet {
 	    }
 	    int size = game.getCurrentRoom().getEnemies().size();
 	    int enemyNo =1;
-	    for(Enemy e: game.getCurrentRoom().getEnemies()){
-	    	int spacing = 800 /size;
-	    	this.image(e.getImage(), (spacing * enemyNo)-e.getImage().width, 590 - e.getImage().height);
-	    	enemyNo ++;
-	    }
+	    try{
+		    for(Enemy e: game.getCurrentRoom().getEnemies()){
+		    	int spacing = 800 /size;
+		    	this.image(e.getImage(), (spacing * enemyNo)-e.getImage().width, 590 - e.getImage().height);
+		    	enemyNo ++;
+		    }
+	    }catch(ConcurrentModificationException e){}
 	}
 	
 }

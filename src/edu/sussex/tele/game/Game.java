@@ -88,5 +88,10 @@ public class Game implements Runnable{
 	public ArrayList<Hero> getHeros() {
 		return heros;
 	}
+
+	public void setHeros(ArrayList<Hero> heros2) {
+		heros = heros2;
+		
+	}
 	
 }
