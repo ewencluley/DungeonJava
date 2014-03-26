@@ -1,0 +1,1 @@
+addEnemy(new Enemy("C:\\Users\\Ewen\\workspace\\TELE\\character\\goblin.png"));
