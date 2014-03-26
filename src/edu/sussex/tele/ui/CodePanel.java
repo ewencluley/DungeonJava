@@ -9,11 +9,15 @@ import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.TextEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
@@ -24,8 +28,15 @@ import javax.swing.text.BadLocationException;
 public class CodePanel extends JTextPane {
 
 	private HashMap<Rectangle, Integer> clickToAdds = new HashMap<Rectangle, Integer>();
+	private BufferedImage addPathImg;
 	
 	public CodePanel(){
+		try {
+			addPathImg = ImageIO.read(new File("editor\\addImg.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		AddClickListener mouseListener = new AddClickListener();
 		this.addMouseListener(mouseListener);
 		this.addMouseMotionListener(mouseListener);
@@ -37,10 +48,12 @@ public class CodePanel extends JTextPane {
 		
 		for(Rectangle rect: clickToAdds.keySet()){
 			g.setColor(Color.GREEN);
-			g.fillRect(rect.x, rect.y, rect.width, rect.height);
+			//g.fillRect(rect.x, rect.y, 2, rect.height);
+			g.drawImage(addPathImg, rect.x, rect.y, null);
 			g.setColor(Color.BLACK);
-			g.setFont(Font.decode("Arial-bold-14"));
-			g.drawString("+", rect.x+5, rect.y+12);
+			g.setFont(Font.decode("Arial-bold-10"));
+			g.drawString("+ insert file", rect.x+20, rect.y+12);
+			
 		}
 		
 	}
@@ -48,15 +61,16 @@ public class CodePanel extends JTextPane {
 	private void findClickToAdds(){
 		try {
 			String text = this.getDocument().getText(0, this.getDocument().getLength());
-			Pattern pattern = Pattern.compile("\\((\\s)*\\)");
+			Pattern pattern = Pattern.compile("((new Enemy)|music|sound|(new Hero))\\((\\s)*\\)");
 		    Matcher matcher = pattern.matcher(text);
 		    // Check all occurrences
 		    while (matcher.find()) {
-		    	final int index = matcher.start();
-		    	Rectangle rect = this.modelToView(index+1);
-				Rectangle diaplayRect = new Rectangle(rect.x, rect.y, 20, rect.height);
-				clickToAdds.put(diaplayRect, index+1);
+		    	final int index = matcher.end();
+		    	Rectangle rect = this.modelToView(index-1);
+				Rectangle diaplayRect = new Rectangle(rect.x-3, rect.y+3, 100, rect.height);
+				clickToAdds.put(diaplayRect, index-1);
 		    }
+		    this.repaint();
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -94,4 +94,8 @@ public class Game implements Runnable{
 		
 	}
 	
+	public void addHero(Hero h){
+		heros.add(h);
+	}
+	
 }

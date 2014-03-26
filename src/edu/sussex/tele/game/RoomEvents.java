@@ -1,12 +1,14 @@
 package edu.sussex.tele.game;
 
 import edu.sussex.tele.game.characters.Enemy;
+import edu.sussex.tele.game.characters.Hero;
 
 public abstract class RoomEvents {
 	public abstract void enterRoom();
 	public abstract void exitRoom();
 	
 	Game game;
+	SoundPlayer sp;
 	public Game getGame() {
 		return game;
 	}
@@ -15,6 +17,12 @@ public abstract class RoomEvents {
 	
 	public void music(String path){
 		game.music(path);
+	}
+	
+	public void sound(String path){
+		sp = new SoundPlayer(path);
+		Thread musicThread = new Thread(sp);
+		musicThread.start();
 	}
 	
 	public void pause(int seconds){
@@ -35,5 +43,10 @@ public abstract class RoomEvents {
 	}
 	public void setRoom(Room room) {
 		this.room = room;
+	}
+	
+	public void playerMakeHero(){
+		game.addHero(Hero.PlayerMakesHero());
+		
 	}
 }

@@ -10,6 +10,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
@@ -44,6 +45,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.DropMode;
 import javax.swing.ImageIcon;
+import javax.swing.JScrollPane;
 
 public class GUI extends JFrame {
 
@@ -52,12 +54,11 @@ public class GUI extends JFrame {
 	private String PLAYMETHOD_DEF_START = "public void run(){";
 	private String PLAYMETHOD_DEF_END = "}";
 	private JPanel contentPane;
-	
-	private CodePanel enterRoomScript;
 	private JPanel panel_2;
 	private JTextField roomName;
 	private RoomImagePreview roomImagePreview;
 	private MapViewer mapViewer;
+	private CodePanel enterRoomScript;
 
 	/**
 	 * Launch the application.
@@ -107,8 +108,6 @@ public class GUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		enterRoomScript = new CodePanel();
-		
 		JPanel panel = new JPanel();
 		
 		mapViewer = new MapViewer(this);
@@ -127,12 +126,14 @@ public class GUI extends JFrame {
 		});
 		
 		roomImagePreview = new RoomImagePreview();
+		
+		JScrollPane scrollPane = new JScrollPane();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 746, Short.MAX_VALUE)
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -143,33 +144,37 @@ public class GUI extends JFrame {
 										.addGap(18))
 									.addGroup(gl_contentPane.createSequentialGroup()
 										.addGap(76)
-										.addComponent(btnChangeImage)
-										.addPreferredGap(ComponentPlacement.RELATED)))
+										.addComponent(btnChangeImage)))
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addContainerGap()
-									.addComponent(roomImagePreview, GroupLayout.PREFERRED_SIZE, 249, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.UNRELATED)))
+									.addComponent(roomImagePreview, GroupLayout.PREFERRED_SIZE, 249, GroupLayout.PREFERRED_SIZE)))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(enterRoomScript, GroupLayout.PREFERRED_SIZE, 497, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 499, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(mapViewer, GroupLayout.PREFERRED_SIZE, 229, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(roomImagePreview, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
 							.addComponent(btnChangeImage))
-						.addComponent(enterRoomScript, GroupLayout.PREFERRED_SIZE, 505, GroupLayout.PREFERRED_SIZE))
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addContainerGap())
 		);
+		
+		enterRoomScript = new CodePanel();
+		TextLineNumber lineNumbers = new TextLineNumber(enterRoomScript);
+		scrollPane.setRowHeaderView( lineNumbers );
+		
+		scrollPane.setViewportView(enterRoomScript);
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
 		
 		JButton btnDeleteRoom = new JButton("Delete Room");
@@ -220,14 +225,19 @@ public class GUI extends JFrame {
 		btnRun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				mapViewer.save();
-				Map theMap = BuildGame.buildMap(mapViewer);
-				Game theGame = new Game(theMap);
-				GameGUI gameGUI = new GameGUI(theGame);
-				gameGUI.runGame();
+				if(mapViewer.startSet){
+					Map theMap = BuildGame.buildMap(mapViewer);
+					Game theGame = new Game(theMap);
+					GameGUI gameGUI = new GameGUI(theGame);
+					gameGUI.runGame();
+				}else{
+					JOptionPane.showMessageDialog(GUI.this, "Your dungeon must have a start room to be playable, please set one.");
+				}
 			}
 		});
 		panel.add(btnRun);
 		contentPane.setLayout(gl_contentPane);
+		enterRoomScript.setEnabled(false);
 	}
 	
 	public void setRoomImage(String path){
@@ -245,5 +255,8 @@ public class GUI extends JFrame {
 
 	public void setRoomName(String roomName2) {
 		roomName.setText(roomName2);
+	}
+	public CodePanel getCodePanel() {
+		return enterRoomScript;
 	}
 }

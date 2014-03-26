@@ -12,6 +12,7 @@ public class MapViewer extends JPanel {
 	
 	RoomButton currentRoom;
 	GUI gui;
+	boolean startSet = false;
 	public MapViewer(GUI gui) {
 		this.gui = gui;
 		setLayout(new GridLayout(10, 10, 0, 0));
@@ -38,6 +39,7 @@ public class MapViewer extends JPanel {
 			gui.setExitRoomScript(currentRoom.getExitRoomCode());
 			gui.setRoomImage(currentRoom.getRoomImage());
 			gui.setRoomName(currentRoom.getRoomName());
+			gui.getCodePanel().setEnabled(true);
 			gui.repaint();
 		}
 	}
@@ -64,6 +66,7 @@ public class MapViewer extends JPanel {
 		currentRoom.setStartRoom(true);
 		currentRoom.setEndRoom(false);
 		this.repaint();
+		startSet = true;
 	}
 	
 	public void makeCurrentRoomEnd(){
