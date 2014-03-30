@@ -22,9 +22,6 @@ public class Game implements Runnable{
 		theMap = map;
 		currentRoom = map.startRoom;
 		currentRoom.getEvents().addGameListener(this);
-		heros.add(new Hero("C:\\Users\\Ewen\\workspace\\TELE\\character\\hero1.png"));//TODO change this so homer is not the hero
-		heros.add(new Hero("C:\\Users\\Ewen\\workspace\\TELE\\character\\hero1.png"));//TODO change this so homer is not the hero
-		heros.add(new Hero("C:\\Users\\Ewen\\workspace\\TELE\\character\\hero1.png"));//TODO change this so homer is not the hero
 	}
 	
 	public Battle getCurrentBattle(){

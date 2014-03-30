@@ -32,6 +32,9 @@ public class RoomButton extends JButton {
 
 	public void setStartRoom(boolean startRoom) {
 		this.startRoom = startRoom;
+		if(startRoom){
+			this.setBackground(Color.BLUE);
+		}
 	}
 
 	private boolean endRoom;
@@ -56,6 +59,9 @@ public class RoomButton extends JButton {
 	private boolean roomExists;
 	private boolean selected;
 	
+	private Border raisedBorder = BorderFactory.createBevelBorder(BevelBorder.RAISED);
+	private Border unselectedBorder = BorderFactory.createLineBorder(Color.darkGray, 1);
+	
 	public boolean isRoomExists() {
 		return roomExists;
 	}
@@ -64,39 +70,27 @@ public class RoomButton extends JButton {
 		super();
 		this.x = x;
 		this.y = y;
+		this.setBackground(Color.gray);
+		this.setBorder(unselectedBorder);
 	}
 	
 	public void activate(){
 		if(!roomExists){
 			roomExists = true;
+			this.setBackground(Color.green);
 			System.out.println("room made at"+x +":"+y);
 		}
+		this.setBorder(raisedBorder);
+		
 	}
 	
 	public void setSelected(boolean selected) {
 		this.selected = selected;
-	}
-
-	public void paintComponent(Graphics g){
-		if(roomExists){
-			if(startRoom){
-				this.setBackground(Color.BLUE);
-			}else if(endRoom){
-				this.setBackground(Color.RED);
-				
-			}else{
-				this.setBackground(Color.GREEN);
-			}
-		}else{
-			this.setBackground(Color.gray);
-		}
 		if(selected){
-			this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+			this.setBorder(raisedBorder);
 		}else{
-			this.setBorder(BorderFactory.createLineBorder(Color.darkGray, 1));
+			this.setBorder(unselectedBorder);
 		}
-		
-		super.paintComponent(g);
 	}
 
 	public boolean isEndRoom() {
@@ -105,6 +99,9 @@ public class RoomButton extends JButton {
 
 	public void setEndRoom(boolean endRoom) {
 		this.endRoom = endRoom;
+		if(endRoom){
+			this.setBackground(Color.RED);
+		}
 	}
 
 	public String getRoomName() {
