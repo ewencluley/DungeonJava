@@ -152,11 +152,14 @@ public class Javac {
         int off = 0;
         while (len > 0) {
             int n = fis.read(buf, off, len);
-            if (n == -1)
+            if (n == -1){
+            	fis.close();
                 throw new IOException("Unexpected EOF reading " + f.getAbsolutePath());
+            }
             off += n;
             len -= n;
         }
+        fis.close();
         return buf;
     }
 
