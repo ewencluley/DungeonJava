@@ -25,7 +25,7 @@ public class BuildGame {
 	private static String EXIT_DEF_START = "public void exitRoom(){\n\r";
 	private static String EXIT_DEF_END = "\n\r}";
 	
-	public static Map buildMap(MapViewer map){
+	public static Map buildMap(MapViewer map) throws SyntaxErrorException{
 		Map theMap= new Map();
 		AgentClassLoader classLoader = new AgentClassLoader();
 		for(Component roomButton :map.getComponents()){

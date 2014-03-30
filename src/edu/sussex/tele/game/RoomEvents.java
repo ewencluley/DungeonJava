@@ -7,6 +7,8 @@ public abstract class RoomEvents {
 	public abstract void enterRoom();
 	public abstract void exitRoom();
 	
+	public boolean visited = false;
+	
 	Game game;
 	SoundPlayer sp;
 	public Game getGame() {

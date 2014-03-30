@@ -7,13 +7,13 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import edu.sussex.tele.game.battle.BattleDialog;
+import edu.sussex.tele.game.battle.Battle;
 import edu.sussex.tele.game.battle.BattleResult;
 import edu.sussex.tele.game.characters.Enemy;
 import processing.core.PConstants;
 import processing.core.PImage;
 
-public class Room {
+public class Room implements Runnable{
 	
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	
@@ -41,12 +41,21 @@ public class Room {
 		this.endRoom = endRoom;
 	}
 	
-	public void enterRoom(){
+	@Override
+	public void run(){
 		roomEvents.enterRoom();
 		if(!enemies.isEmpty()){
-			BattleDialog bd = new BattleDialog(gameGUI, this, roomEvents.getGame());
-			
-			//roomEvents.getGame().setHeros(retVal.heros);
+			/*try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
+			roomEvents.game.battle = new Battle(enemies, roomEvents.game.heros);
+			roomEvents.game.battle.run();
+			roomEvents.getGame().setHeros(roomEvents.game.battle.returnHeros);
+			this.setEnemies(roomEvents.game.battle.returnEnemies);
+			roomEvents.game.battle = null;
 		}
 	}
 	

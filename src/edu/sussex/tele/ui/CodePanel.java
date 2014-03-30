@@ -12,6 +12,7 @@ import java.awt.event.TextEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -32,7 +33,7 @@ public class CodePanel extends JTextPane {
 	
 	public CodePanel(){
 		try {
-			addPathImg = ImageIO.read(new File("editor\\addImg.png"));
+			addPathImg = ImageIO.read(new File(Paths.get("").toAbsolutePath().toString()+"/editor/addImg.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

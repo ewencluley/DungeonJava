@@ -21,6 +21,7 @@ import edu.sussex.tele.compiler.AgentClassLoader;
 import edu.sussex.tele.compiler.BuildGame;
 import edu.sussex.tele.compiler.ClassInfo;
 import edu.sussex.tele.compiler.Javac;
+import edu.sussex.tele.compiler.SyntaxErrorException;
 import edu.sussex.tele.game.Game;
 import edu.sussex.tele.game.GameGUI;
 import edu.sussex.tele.game.Map;
@@ -226,10 +227,16 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				mapViewer.save();
 				if(mapViewer.startSet){
-					Map theMap = BuildGame.buildMap(mapViewer);
-					Game theGame = new Game(theMap);
-					GameGUI gameGUI = new GameGUI(theGame);
-					gameGUI.runGame();
+					try {
+						Map theMap = BuildGame.buildMap(mapViewer);
+						Game theGame = new Game(theMap);
+						GameGUI gameGUI = new GameGUI(theGame);
+						gameGUI.runGame();
+					} catch (SyntaxErrorException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 				}else{
 					JOptionPane.showMessageDialog(GUI.this, "Your dungeon must have a start room to be playable, please set one.");
 				}

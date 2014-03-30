@@ -10,26 +10,25 @@ import edu.sussex.tele.game.characters.Character;
 
 import java.util.Comparator;
 
-public class Battle implements Runnable{
+public class Battle{
 
-	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-	ArrayList<Hero> heros = new ArrayList<Hero>();
+	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	private ArrayList<Hero> heros = new ArrayList<Hero>();
 	
 	PriorityQueue<Character> combatants = new PriorityQueue<Character>(50, new InitiativeComparator());
 	
 	Hero currentHero;
 	Enemy currentEnemy;
-	Character currentTarget;
-	Character currentCombatant;
+	private Character currentTarget;
+	private Character currentCombatant;
 	
 	boolean battleInProgress = true;
 	BattlePhase phase = BattlePhase.START_BATTLE;
 	
-	int damage = 0;
+	private int damage = 0;
 	public ArrayList<Enemy> returnEnemies =null;
 	public ArrayList<Hero> returnHeros =null;
 	
-	BattleDialog battleDialog;
 	
 	public BattlePhase getPhase() {
 		return phase;
@@ -39,20 +38,18 @@ public class Battle implements Runnable{
 		this.phase = phase;
 	}
 
-	public Battle(ArrayList<Enemy> enemies, ArrayList<Hero> heros, BattleDialog battleDialog) {
-		this.battleDialog = battleDialog;
+	public Battle(ArrayList<Enemy> enemies, ArrayList<Hero> heros) {
 		this.enemies.addAll(enemies);
 		this.heros.addAll(heros);
 		combatants.addAll(heros);combatants.addAll(enemies);
 	}
 	
-	@Override
 	public void run() {
 		try {
 			Thread.sleep(2000);//wait to display battle intro screen for 2 sec
 			Random random = new Random();
 			while(battleInProgress){
-				while(!combatants.isEmpty()){
+				while(!combatants.isEmpty() && !enemies.isEmpty() && !heros.isEmpty()){
 					phase = BattlePhase.START_TURN;
 					currentTarget = null;
 					currentCombatant = combatants.poll();
@@ -111,11 +108,50 @@ public class Battle implements Runnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		battleDialog.setVisible(false);
 	}
 		
 	public void setCurrentTarget(Enemy enemy) {
 		currentTarget = enemy;
+	}
+
+	public Character getCurrentTarget() {
+		return currentTarget;
+	}
+
+	public void setCurrentTarget(Character currentTarget) {
+		this.currentTarget = currentTarget;
+	}
+
+	public ArrayList<Enemy> getEnemies() {
+		return enemies;
+	}
+
+	public void setEnemies(ArrayList<Enemy> enemies) {
+		this.enemies = enemies;
+	}
+
+	public ArrayList<Hero> getHeros() {
+		return heros;
+	}
+
+	public void setHeros(ArrayList<Hero> heros) {
+		this.heros = heros;
+	}
+
+	public Character getCurrentCombatant() {
+		return currentCombatant;
+	}
+
+	public void setCurrentCombatant(Character currentCombatant) {
+		this.currentCombatant = currentCombatant;
+	}
+
+	public int getDamage() {
+		return damage;
+	}
+
+	public void setDamage(int damage) {
+		this.damage = damage;
 	}
 
 	private class InitiativeComparator implements Comparator<Character>
