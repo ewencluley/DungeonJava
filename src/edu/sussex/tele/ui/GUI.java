@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JDesktopPane;
@@ -33,6 +34,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,13 +49,11 @@ import javax.swing.SwingConstants;
 import javax.swing.DropMode;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JEditorPane;
 
 public class GUI extends JFrame {
 
-	private String WRAPPER_CODE_START = "package edu.sussex.tele.game; \npublic class ThisGame extends edu.sussex.tele.game.Game{"; 
-	private String WRAPPER_CODE_END = "}"; 
-	private String PLAYMETHOD_DEF_START = "public void run(){";
-	private String PLAYMETHOD_DEF_END = "}";
 	private JPanel contentPane;
 	private JPanel panel_2;
 	private JTextField roomName;
@@ -98,13 +98,13 @@ public class GUI extends JFrame {
 	 * Create the frame.
 	 */
 	public GUI() {
-		 try {
-			    UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName() );
-			 } catch (Exception e) {
-			            e.printStackTrace();
-			 }
+		try {
+			UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName() );
+		} catch (Exception e) {
+	            e.printStackTrace();
+		}
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 782, 591);
+		setBounds(100, 100, 1070, 591);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -118,7 +118,9 @@ public class GUI extends JFrame {
 		JButton btnChangeImage = new JButton("Change Picture");
 		btnChangeImage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser chooser = new JFileChooser();
+				JFileChooser chooser = new JFileChooser(Paths.get("").toAbsolutePath().toString());
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg");
+				chooser.setFileFilter(filter);
 				int fileChooseResult = chooser.showOpenDialog(GUI.this);
 				if(fileChooseResult == JFileChooser.APPROVE_OPTION){
 					mapViewer.setCurrentRoomImage(chooser.getSelectedFile().getAbsolutePath());
@@ -129,51 +131,74 @@ public class GUI extends JFrame {
 		roomImagePreview = new RoomImagePreview();
 		
 		JScrollPane scrollPane = new JScrollPane();
+		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE)
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 1026, Short.MAX_VALUE)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-									.addGroup(gl_contentPane.createSequentialGroup()
-										.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-											.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
-											.addComponent(mapViewer, GroupLayout.PREFERRED_SIZE, 241, GroupLayout.PREFERRED_SIZE))
-										.addGap(18))
-									.addGroup(gl_contentPane.createSequentialGroup()
-										.addGap(76)
-										.addComponent(btnChangeImage)))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(mapViewer, GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addContainerGap()
-									.addComponent(roomImagePreview, GroupLayout.PREFERRED_SIZE, 249, GroupLayout.PREFERRED_SIZE)))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 499, GroupLayout.PREFERRED_SIZE)))
+									.addGap(76)
+									.addComponent(btnChangeImage))
+								.addComponent(roomImagePreview, GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+								.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 407, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(mapViewer, GroupLayout.PREFERRED_SIZE, 229, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addComponent(roomImagePreview, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(btnChangeImage))
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(11)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
+								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE))))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		
+		VideoPanel vid_panel = new VideoPanel();
+		tabbedPane.addTab("Video Tutorial", null, vid_panel, null);
+		
+		JEditorPane editorPane = new JEditorPane();
+		tabbedPane.addTab("Hints", null, editorPane, null);
+		java.net.URL url = null;
+		try {
+			url = new File("hints.html").toURI().toURL();
+		} catch (MalformedURLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+
+;
+		try {
+			editorPane.setPage(url);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		enterRoomScript = new CodePanel();
-		TextLineNumber lineNumbers = new TextLineNumber(enterRoomScript);
-		scrollPane.setRowHeaderView( lineNumbers );
+		//TextLineNumber lineNumbers = new TextLineNumber(enterRoomScript);
+		//scrollPane.setRowHeaderView( lineNumbers );
 		
 		scrollPane.setViewportView(enterRoomScript);
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
@@ -212,7 +237,6 @@ public class GUI extends JFrame {
 		panel_3.add(lblRoomName);
 		
 		roomName = new JTextField();
-		roomName.setText("A brand new room");
 		panel_3.add(roomName);
 		roomName.setColumns(10);
 		
@@ -231,6 +255,7 @@ public class GUI extends JFrame {
 						Map theMap = BuildGame.buildMap(mapViewer);
 						Game theGame = new Game(theMap);
 						GameGUI gameGUI = new GameGUI(theGame);
+						theGame.setGameGUI(gameGUI);
 						gameGUI.runGame();
 					} catch (SyntaxErrorException e) {
 						// TODO Auto-generated catch block

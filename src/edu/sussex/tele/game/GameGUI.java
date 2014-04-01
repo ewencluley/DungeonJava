@@ -11,17 +11,23 @@ import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import edu.sussex.tele.ui.CharacterImagePreview;
 
 public class GameGUI extends JFrame{
 
 	GraphicsPanel graphicsPanel;
 	Game theGame;
+	private CharacterImagePreview characterImagePreview;
+	private JButton btnLeft;
+	private JButton btnUp;
+	private JButton btnRight;
+	private JButton btnBackwards;
 	
 	public GameGUI(Game game){
 		setResizable(false);
 		theGame = game;
 		this.setTitle("My Game");
-		this.setSize(805, 730);
+		this.setSize(816, 755);
 		
 		JPanel panel = new JPanel();
 		graphicsPanel = new GraphicsPanel(theGame);
@@ -49,24 +55,30 @@ public class GameGUI extends JFrame{
 		);
 		
 		JPanel panel_2 = new JPanel();
+		
+		characterImagePreview = new CharacterImagePreview();
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 196, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(568, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(characterImagePreview, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(496, Short.MAX_VALUE))
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_1.createSequentialGroup()
+				.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
 					.addGap(5)
-					.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
+						.addComponent(characterImagePreview, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+						.addComponent(panel_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		panel_2.setLayout(new BorderLayout(0, 0));
 		
-		JButton btnUp = new JButton("Forward");
+		btnUp = new JButton("Forward");
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				theGame.move("FORWARD");
@@ -75,7 +87,7 @@ public class GameGUI extends JFrame{
 		});
 		panel_2.add(btnUp, BorderLayout.NORTH);
 		
-		JButton btnLeft = new JButton("Left");
+		btnLeft = new JButton("Left");
 		btnLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				theGame.move("LEFT");
@@ -83,7 +95,7 @@ public class GameGUI extends JFrame{
 		});
 		panel_2.add(btnLeft, BorderLayout.WEST);
 		
-		JButton btnRight = new JButton("Right");
+		btnRight = new JButton("Right");
 		btnRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				theGame.move("RIGHT");
@@ -91,7 +103,7 @@ public class GameGUI extends JFrame{
 		});
 		panel_2.add(btnRight, BorderLayout.EAST);
 		
-		JButton btnBackwards = new JButton("Backwards");
+		btnBackwards = new JButton("Backwards");
 		btnBackwards.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				theGame.move("BACKWARD");
@@ -115,5 +127,33 @@ public class GameGUI extends JFrame{
 	public void runGame(){
 		new Thread(theGame).start();
 	}
+	protected CharacterImagePreview getCharacterImagePreview() {
+		return characterImagePreview;
+	}
+	public JButton getBtnLeft() {
+		return btnLeft;
+	}
+	public JButton getBtnUp() {
+		return btnUp;
+	}
+	public JButton getBtnRight() {
+		return btnRight;
+	}
+	public JButton getBtnBackwards() {
+		return btnBackwards;
+	}
 	
+	public void disableControlls(){
+		btnRight.setEnabled(false);
+		btnUp.setEnabled(false);
+		btnBackwards.setEnabled(false);
+		btnLeft.setEnabled(false);
+	}
+	
+	public void enableControlls(){
+		btnRight.setEnabled(true);
+		btnUp.setEnabled(true);
+		btnBackwards.setEnabled(true);
+		btnLeft.setEnabled(true);
+	}
 }

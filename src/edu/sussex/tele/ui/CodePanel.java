@@ -24,11 +24,15 @@ import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
 
 public class CodePanel extends JTextPane {
 
 	private HashMap<Rectangle, Integer> clickToAdds = new HashMap<Rectangle, Integer>();
+	private HashMap<Rectangle, String> clickToAddsTypes = new HashMap<Rectangle, String>();
+	
 	private BufferedImage addPathImg;
 	
 	public CodePanel(){
@@ -62,14 +66,28 @@ public class CodePanel extends JTextPane {
 	private void findClickToAdds(){
 		try {
 			String text = this.getDocument().getText(0, this.getDocument().getLength());
-			Pattern pattern = Pattern.compile("((new Enemy)|music|sound|(new Hero))\\((\\s)*\\)");
+			Pattern pattern = Pattern.compile("(?<command>(new Enemy)|music|sound|(new Hero))\\(\\)");
 		    Matcher matcher = pattern.matcher(text);
 		    // Check all occurrences
 		    while (matcher.find()) {
 		    	final int index = matcher.end();
-		    	Rectangle rect = this.modelToView(index-1);
+		    	Rectangle rect = this.modelToView(index);
 				Rectangle diaplayRect = new Rectangle(rect.x-3, rect.y+3, 100, rect.height);
-				clickToAdds.put(diaplayRect, index-1);
+				clickToAdds.put(diaplayRect, index);
+				switch(matcher.group("command")){
+				case "new Enemy":
+					clickToAddsTypes.put(diaplayRect, "IMAGE");
+					break;
+				case "music":
+					clickToAddsTypes.put(diaplayRect, "SOUND");
+					break;
+				case "sound":
+					clickToAddsTypes.put(diaplayRect, "SOUND");
+					break;
+				case "new Hero":
+					clickToAddsTypes.put(diaplayRect, "IMAGE");
+					break;
+				}
 		    }
 		    this.repaint();
 		} catch (BadLocationException e) {
@@ -82,11 +100,13 @@ public class CodePanel extends JTextPane {
 
 		private void textValueChanged() {
 			clickToAdds = new HashMap<Rectangle, Integer>();
+			clickToAddsTypes = new HashMap<Rectangle, String>();
 			findClickToAdds();
 		}
 
 		@Override
 		public void insertUpdate(DocumentEvent e) {
+			//e.
 			textValueChanged();
 		}
 
@@ -108,10 +128,24 @@ public class CodePanel extends JTextPane {
 			for(Rectangle r:clickToAdds.keySet()){
 				if(r.contains(new Point(e.getX(), e.getY()))){
 					try {
-						JFileChooser fileChooser = new JFileChooser();
+						JFileChooser fileChooser = new JFileChooser(Paths.get("").toAbsolutePath().toString());
+						FileNameExtensionFilter filter = null;
+						switch(CodePanel.this.clickToAddsTypes.get(r)){
+						case "IMAGE":
+							filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg");
+							break;
+						case "SOUND":
+							filter = new FileNameExtensionFilter("Audio Files", "mp3");
+							break;
+						}
+						fileChooser.setFileFilter(filter);
 						int fileChooseResult = fileChooser.showOpenDialog(CodePanel.this);
 						if(fileChooseResult == JFileChooser.APPROVE_OPTION){
-							CodePanel.this.getDocument().insertString(clickToAdds.get(r), "\""+fileChooser.getSelectedFile().getAbsolutePath().replace("\\", "\\\\")+"\"", null);
+							int index = clickToAdds.get(r);
+							String path = "\""+fileChooser.getSelectedFile().getAbsolutePath().replace("\\", "/")+"\"";
+							Document doc = CodePanel.this.getDocument();
+							doc.insertString(index-1, path, null);
+							
 						}
 					} catch (BadLocationException e1) {
 						// TODO Auto-generated catch block

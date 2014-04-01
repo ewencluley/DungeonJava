@@ -2,6 +2,7 @@ package edu.sussex.tele.ui;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -79,7 +80,21 @@ public class MapViewer extends JPanel {
 	}
 
 	public void deleteCurrentRoom() {
-	
+		for(int i=0; i<this.getComponents().length; i++){
+			if(this.currentRoom == this.getComponent(i)){
+				RoomButton rb = (RoomButton) this.getComponent(i);
+				this.remove(i);
+				RoomButton btnNewButton = new RoomButton(rb.x, rb.y);
+				btnNewButton.setBackground(Color.gray);
+				btnNewButton.addActionListener(new MapButtonClickedListener());
+				currentRoom = null;
+				this.add(btnNewButton, i);
+				btnNewButton.repaint();
+			}
+		}
+		desectAll();
+		this.repaint();
+		gui.repaint();
 	}
 
 	public void save() {

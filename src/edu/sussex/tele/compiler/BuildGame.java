@@ -22,7 +22,7 @@ public class BuildGame {
 	private static String WRAPPER_CODE_END = "\n\r}"; 
 	private static String ENTER_DEF_START = "public void enterRoom(){\n\r";
 	private static String ENTER_DEF_END = "\n\r}";
-	private static String EXIT_DEF_START = "public void exitRoom(){\n\r";
+	private static String EXIT_DEF_START = "public void exitRoom(){\n\rvisited = true;";
 	private static String EXIT_DEF_END = "\n\r}";
 	
 	public static Map buildMap(MapViewer map) throws SyntaxErrorException{

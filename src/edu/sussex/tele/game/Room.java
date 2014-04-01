@@ -43,19 +43,23 @@ public class Room implements Runnable{
 	
 	@Override
 	public void run(){
-		roomEvents.enterRoom();
-		if(!enemies.isEmpty()){
-			/*try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
-			roomEvents.game.battle = new Battle(enemies, roomEvents.game.heros);
-			roomEvents.game.battle.run();
-			roomEvents.getGame().setHeros(roomEvents.game.battle.returnHeros);
-			this.setEnemies(roomEvents.game.battle.returnEnemies);
-			roomEvents.game.battle = null;
+		if(!roomEvents.visited){
+			roomEvents.enterRoom();
+			if(!enemies.isEmpty()){
+				gameGUI.disableControlls();
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				roomEvents.game.battle = new Battle(enemies, roomEvents.game.heros);
+				roomEvents.game.battle.run();
+				roomEvents.getGame().setHeros(roomEvents.game.battle.returnHeros);
+				this.setEnemies(roomEvents.game.battle.returnEnemies);
+				roomEvents.game.battle = null;
+				gameGUI.enableControlls();
+			}
 		}
 	}
 	

@@ -13,7 +13,9 @@ public class Character {
 	public int initiative = 1;
 	public int strength = 1;
 	public int hp = 1;
-	public int dexterity = 1;
+	public int defence= 1;
+	
+	public String name = "";
 	public Weapon weapon;
 	
 	private PImage charImage;

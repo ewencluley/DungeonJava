@@ -46,8 +46,6 @@ public class Game implements Runnable{
 		currentRoom.setGameGUI(gameGUI);
 		currentRoom.getEvents().addGameListener(this);
 		new Thread(currentRoom).start();
-		
-		
 	}
 
 	public void move(String direction) {

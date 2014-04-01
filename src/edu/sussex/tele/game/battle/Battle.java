@@ -55,7 +55,12 @@ public class Battle{
 					currentCombatant = combatants.poll();
 					if(currentCombatant instanceof Enemy){
 						phase = BattlePhase.NPC_TARGETS;
-						int heroToAttack = (int) random.nextInt(heros.size()-1);
+						int heroToAttack;
+						try{
+							heroToAttack = (int) random.nextInt(heros.size()-1);
+						}catch(IllegalArgumentException e){
+							heroToAttack =0;
+						}
 						Thread.sleep(1000);
 						currentTarget = heros.get(heroToAttack);
 						Thread.sleep(1000);
@@ -95,7 +100,7 @@ public class Battle{
 					phase = BattlePhase.BATTLE_LOST;
 					Thread.sleep(1500);
 					returnHeros = heros;
-					returnEnemies = new ArrayList<Enemy>();
+					returnEnemies = enemies;
 				}else if(enemies.isEmpty()){
 					battleInProgress = false;
 					phase = BattlePhase.BATTLE_WON;

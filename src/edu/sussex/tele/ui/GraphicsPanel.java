@@ -73,17 +73,20 @@ public class GraphicsPanel extends PApplet {
 			switch(battle.getPhase()){
 			case START_BATTLE:
 				damageY=0;
-				image(battleBackground,0,0);
+				//image(battleBackground,0,0);
+				this.image(background, 0, 0);
 				startBattle(battle);
 				break;
 			case START_TURN:
 				damageY=0;
-				image(battleBackground,0,0);
+				//image(battleBackground,0,0);
+				this.image(background, 0, 0);
 				player_target(battle);
 				break;
 			case PLAYER_TARGETS:
 				damageY=0;
-				image(battleBackground,0,0);
+				//image(battleBackground,0,0);
+				this.image(background, 0, 0);
 				player_target(battle);
 				break;
 			case PLAYER_ATTACKS:
@@ -92,7 +95,8 @@ public class GraphicsPanel extends PApplet {
 				break;
 			case NPC_TARGETS:
 				damageY=0;
-				image(battleBackground,0,0);
+				//image(battleBackground,0,0);
+				this.image(background, 0, 0);
 				npc_target(battle);
 				break;
 			case NPC_ATTACKS:
@@ -104,6 +108,7 @@ public class GraphicsPanel extends PApplet {
 				won(battle);
 				break;
 			case BATTLE_LOST:
+				image(battleBackground,0,0);
 				lost(battle);
 				break;
 			case TARGET_DEAD:
